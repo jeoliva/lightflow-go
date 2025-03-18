@@ -27,11 +27,19 @@ import (
 )
 
 func main() {
-	fmt.Println(lightflow.ExampleFunction())
+	api := lightflow.NewAPIClient(api_base_url, api_token)
+
+	// List assets
+	println("Listing assets")
+	assets, err := api.GetAssets()
+	if err != nil {
+		panic(err)
+	}
+
+	for _, asset := range assets.Items {
+		fmt.Printf("UUID: %s, Url: %s\n", *asset.UUID, asset.Parameters.Input.UrlPath)
+	}
 }
 ```
 ````
 
-</file>
-
-This should give you a basic structure for your Go library. You can expand on this by adding more functions and tests as needed.
